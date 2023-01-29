@@ -23,7 +23,11 @@ private fun wrapError(exception: Throwable): List<Any> {
   )
 }
 
-/** Generated class from Pigeon that represents data sent in messages. */
+/**
+ * A tab item that includes the title label and native icon data.
+ *
+ * Generated class from Pigeon that represents data sent in messages.
+ */
 data class NativeTab (
   val title: String? = null,
   val nativeTabIcon: NativeTabIconData? = null
@@ -47,7 +51,11 @@ data class NativeTab (
   }
 }
 
-/** Generated class from Pigeon that represents data sent in messages. */
+/**
+ * A color formatted for the API to pass between Flutter and native code.
+ *
+ * Generated class from Pigeon that represents data sent in messages.
+ */
 data class RGBAColor (
   val red: Double? = null,
   val green: Double? = null,
@@ -75,7 +83,11 @@ data class RGBAColor (
   }
 }
 
-/** Generated class from Pigeon that represents data sent in messages. */
+/**
+ * Data for an icon for the API to pass between Flutter and native code.
+ *
+ * Generated class from Pigeon that represents data sent in messages.
+ */
 data class NativeTabIconData (
   val codePoint: Long? = null,
   val fontFamily: String? = null,
@@ -103,7 +115,11 @@ data class NativeTabIconData (
   }
 }
 
-/** Generated class from Pigeon that represents data sent in messages. */
+/**
+ * The style of the NativeTabBar.
+ *
+ * Generated class from Pigeon that represents data sent in messages.
+ */
 data class NativeTabBarApiStyle (
   val isDarkTheme: Boolean? = null,
   /**
@@ -111,11 +127,21 @@ data class NativeTabBarApiStyle (
    * Defaults to `true`. Does not affect iOS.
    */
   val isMaterial3: Boolean? = null,
+  /** The primary color of an unselected tab item. */
   val itemColor: RGBAColor? = null,
+  /** The primary color of the currently selected tab item. */
   val selectedItemColor: RGBAColor? = null,
+  /** The background color of the tab bar in light mode. */
   val backgroundColor: RGBAColor? = null,
+  /** The background color of the tab bar in dark mode. */
   val backgroundColorDark: RGBAColor? = null,
+  /** In Material 3 (Android only), the "pill" color of the selected tab. */
   val materialIndicatorBackgroundColor: RGBAColor? = null,
+  /**
+   * In Material 3 (Android only), the color of the icon of the selected tab.
+   * This icon overlays the pill and defaults to either white or black,
+   * depending on the calculated lightness of the pill color.
+   */
   val materialIndicatorForegroundColor: RGBAColor? = null
 
 ) {
@@ -158,7 +184,11 @@ data class NativeTabBarApiStyle (
     )
   }
 }
-/** Generated class from Pigeon that represents Flutter messages that can be called from Kotlin. */
+/**
+ * A callback API for native code to call Flutter code.
+ *
+ * Generated class from Pigeon that represents Flutter messages that can be called from Kotlin.
+ */
 @Suppress("UNCHECKED_CAST")
 class NativeTabBarFlutterApi(private val binaryMessenger: BinaryMessenger) {
   companion object {
@@ -167,18 +197,21 @@ class NativeTabBarFlutterApi(private val binaryMessenger: BinaryMessenger) {
       StandardMessageCodec()
     }
   }
+  /** Called when the native platform view renders and knows its intrinsic content height. */
   fun wantsHeight(idArg: String, heightArg: Double, callback: () -> Unit) {
     val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.NativeTabBarFlutterApi.wantsHeight", codec)
     channel.send(listOf(idArg, heightArg)) {
       callback()
     }
   }
+  /** Called by the native platform when the user taps a tab. */
   fun valueChanged(idArg: String, selectedIndexArg: Long, callback: () -> Unit) {
     val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.NativeTabBarFlutterApi.valueChanged", codec)
     channel.send(listOf(idArg, selectedIndexArg)) {
       callback()
     }
   }
+  /** Called when the platform code needs the widget state to invalidate and recreate the native view. */
   fun refresh(idArg: String, callback: () -> Unit) {
     val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.NativeTabBarFlutterApi.refresh", codec)
     channel.send(listOf(idArg)) {
@@ -236,16 +269,17 @@ private object NativeTabBarHostApiCodec : StandardMessageCodec() {
   }
 }
 
-/** Generated interface from Pigeon that represents a handler of messages from Flutter. */
+/**
+ * API for our Flutter code to pass data and call methods in native code.
+ *
+ * Generated interface from Pigeon that represents a handler of messages from Flutter.
+ */
 interface NativeTabBarHostApi {
-  /**
-   * Pigeon currently only supports one channel and one shared API instance.
-   * Therefore, we must register our state IDs with the API on the native side
-   * and send commands to the appropriate state by its instance id, otherwise
-   * all commands are sent to the final view instance on the screen.
-   */
+  /** Called from Flutter to send the tabs to the native platform code. */
   fun setTabs(id: String, tabs: List<NativeTab>, selectedIndex: Long?): Boolean
+  /** Called from Flutter to pass the style to the native code. */
   fun setStyle(id: String, style: NativeTabBarApiStyle): Boolean
+  /** Called from Flutter to tell the native code to select the given tab. */
   fun setSelected(id: String, index: Long?): Boolean
 
   companion object {

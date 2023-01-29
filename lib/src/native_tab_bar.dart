@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -8,6 +7,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 import './native_tab_bar_platform_interface.dart';
 import './pigeons.g.dart';
 
+/// Render a native tab bar platform widget.
 class NativeTabBar extends StatefulWidget {
   const NativeTabBar({
     Key? key,
@@ -29,6 +29,8 @@ class NativeTabBar extends StatefulWidget {
   NativeTabBarState createState() => NativeTabBarState();
 }
 
+/// Icon data for a tab that provides both Material (Android)
+/// and Cupertino (iOS) Flutter icons.
 class NativeTabIcon extends NativeTabIconData {
   factory NativeTabIcon.adaptive({
     required IconData material,
@@ -57,6 +59,7 @@ class NativeTabIcon extends NativeTabIconData {
         );
 }
 
+/// The style of the native tab bar widget.
 class NativeTabBarStyle extends NativeTabBarApiStyle {
   NativeTabBarStyle({
     super.isDarkTheme,
@@ -79,13 +82,9 @@ class NativeTabBarStyle extends NativeTabBarApiStyle {
         );
 }
 
-String generateRandomString(int len) {
-  var r = Random();
-  const _chars =
-      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  return List.generate(len, (index) => _chars[r.nextInt(_chars.length)]).join();
-}
-
+/// The state of the tab bar widget that survives a re-render.
+/// This state gets invalidated when `refresh()` is called from the
+/// platform, or when `widget.style.isMaterial3` is toggled.
 class NativeTabBarState extends State<NativeTabBar> {
   @override
   void dispose() {
@@ -174,20 +173,8 @@ class NativeTabBarState extends State<NativeTabBar> {
   }
 }
 
-/// Uncomment the following extension to allow conversion of a color
-/// from the API to a native Flutter color.
-// extension on RGBAColor {
-//   Color toColor() {
-//     return Color.fromARGB(
-//       (alpha ?? 0 * 255.0).toInt(),
-//       (red ?? 0 * 255.0).toInt(),
-//       (green ?? 0 * 255.0).toInt(),
-//       (blue ?? 0 * 255.0).toInt(),
-//     );
-//   }
-// }
-
 extension on Color {
+  /// Convert a Flutter color to a type-safe RGBAColor for the platform API.
   RGBAColor toRGBAColor() {
     return RGBAColor(
       red: red / 255.0,

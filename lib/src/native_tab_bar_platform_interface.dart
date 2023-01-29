@@ -61,21 +61,24 @@ abstract class NativeTabBarPlatform extends PlatformInterface
   /// the same as on the host side) so we can pass messages to the proper component instance.
   Map<String, NativeTabBarState> _widgetInstances = {};
 
+  /// Register a native platform view instance.
   void register(NativeTabBarState state) {
-    if (!isFlutterApiSetup) {
+    if (!_isFlutterApiSetup) {
       NativeTabBarFlutterApi.setup(this);
-      isFlutterApiSetup = true;
+      _isFlutterApiSetup = true;
     }
 
     _widgetInstances[state.id] = state;
   }
 
+  /// Deregister a native platform view instance.
   void deregister(NativeTabBarState state) {
     _widgetInstances.remove(state.id);
   }
 
-  bool isFlutterApiSetup = false;
+  bool _isFlutterApiSetup = false;
 
+  /// The host API for Flutter to communicate with the native code.
   NativeTabBarHostApi api = NativeTabBarHostApi();
 
   @override

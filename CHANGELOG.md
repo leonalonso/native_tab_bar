@@ -1,5 +1,9 @@
 # 1.0.0
 
+- Add documentation and address analysis issues.
+
+# 1.0.0
+
 - Initial public release.
 - Improved Material 3 options on Android.
 - Added ability to tag Material 3 and 2 on Android.

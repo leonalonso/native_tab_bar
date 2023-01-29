@@ -8,6 +8,7 @@ import 'dart:typed_data' show Float64List, Int32List, Int64List, Uint8List;
 import 'package:flutter/foundation.dart' show ReadBuffer, WriteBuffer;
 import 'package:flutter/services.dart';
 
+/// A tab item that includes the title label and native icon data.
 class NativeTab {
   NativeTab({
     this.title,
@@ -36,6 +37,7 @@ class NativeTab {
   }
 }
 
+/// A color formatted for the API to pass between Flutter and native code.
 class RGBAColor {
   RGBAColor({
     this.red,
@@ -72,6 +74,7 @@ class RGBAColor {
   }
 }
 
+/// Data for an icon for the API to pass between Flutter and native code.
 class NativeTabIconData {
   NativeTabIconData({
     this.codePoint,
@@ -108,6 +111,7 @@ class NativeTabIconData {
   }
 }
 
+/// The style of the NativeTabBar.
 class NativeTabBarApiStyle {
   NativeTabBarApiStyle({
     this.isDarkTheme,
@@ -126,16 +130,24 @@ class NativeTabBarApiStyle {
   /// Defaults to `true`. Does not affect iOS.
   bool? isMaterial3;
 
+  /// The primary color of an unselected tab item.
   RGBAColor? itemColor;
 
+  /// The primary color of the currently selected tab item.
   RGBAColor? selectedItemColor;
 
+  /// The background color of the tab bar in light mode.
   RGBAColor? backgroundColor;
 
+  /// The background color of the tab bar in dark mode.
   RGBAColor? backgroundColorDark;
 
+  /// In Material 3 (Android only), the "pill" color of the selected tab.
   RGBAColor? materialIndicatorBackgroundColor;
 
+  /// In Material 3 (Android only), the color of the icon of the selected tab.
+  /// This icon overlays the pill and defaults to either white or black,
+  /// depending on the calculated lightness of the pill color.
   RGBAColor? materialIndicatorForegroundColor;
 
   Object encode() {
@@ -178,13 +190,17 @@ class NativeTabBarApiStyle {
   }
 }
 
+/// A callback API for native code to call Flutter code.
 abstract class NativeTabBarFlutterApi {
   static const MessageCodec<Object?> codec = StandardMessageCodec();
 
+  /// Called when the native platform view renders and knows its intrinsic content height.
   void wantsHeight(String id, double height);
 
+  /// Called by the native platform when the user taps a tab.
   void valueChanged(String id, int selectedIndex);
 
+  /// Called when the platform code needs the widget state to invalidate and recreate the native view.
   void refresh(String id);
 
   static void setup(NativeTabBarFlutterApi? api, {BinaryMessenger? binaryMessenger}) {
@@ -292,6 +308,7 @@ class _NativeTabBarHostApiCodec extends StandardMessageCodec {
   }
 }
 
+/// API for our Flutter code to pass data and call methods in native code.
 class NativeTabBarHostApi {
   /// Constructor for [NativeTabBarHostApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
@@ -302,10 +319,7 @@ class NativeTabBarHostApi {
 
   static const MessageCodec<Object?> codec = _NativeTabBarHostApiCodec();
 
-  /// Pigeon currently only supports one channel and one shared API instance.
-  /// Therefore, we must register our state IDs with the API on the native side
-  /// and send commands to the appropriate state by its instance id, otherwise
-  /// all commands are sent to the final view instance on the screen.
+  /// Called from Flutter to send the tabs to the native platform code.
   Future<bool> setTabs(String arg_id, List<NativeTab?> arg_tabs, int? arg_selectedIndex) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.NativeTabBarHostApi.setTabs', codec,
@@ -333,6 +347,7 @@ class NativeTabBarHostApi {
     }
   }
 
+  /// Called from Flutter to pass the style to the native code.
   Future<bool> setStyle(String arg_id, NativeTabBarApiStyle arg_style) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.NativeTabBarHostApi.setStyle', codec,
@@ -360,6 +375,7 @@ class NativeTabBarHostApi {
     }
   }
 
+  /// Called from Flutter to tell the native code to select the given tab.
   Future<bool> setSelected(String arg_id, int? arg_index) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.NativeTabBarHostApi.setSelected', codec,
