@@ -27,12 +27,13 @@ This plugin addresses all of these issues by providing native iOS and Android be
 
 ### Dependencies
 
+- cupertino_icons
 - plugin_platform_interface
 - uuid
 - visibility_detector
 
-- Dev dependencies:
-    - Pigeon (for API generation)
+- Dev dependencies (only needed when working on this plugin):
+    - pigeon (for API generation)
 
 ## Usage Example
 

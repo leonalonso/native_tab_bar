@@ -174,16 +174,18 @@ class NativeTabBarState extends State<NativeTabBar> {
   }
 }
 
-extension on RGBAColor {
-  Color toColor() {
-    return Color.fromARGB(
-      (alpha ?? 0 * 255.0).toInt(),
-      (red ?? 0 * 255.0).toInt(),
-      (green ?? 0 * 255.0).toInt(),
-      (blue ?? 0 * 255.0).toInt(),
-    );
-  }
-}
+/// Uncomment the following extension to allow conversion of a color
+/// from the API to a native Flutter color.
+// extension on RGBAColor {
+//   Color toColor() {
+//     return Color.fromARGB(
+//       (alpha ?? 0 * 255.0).toInt(),
+//       (red ?? 0 * 255.0).toInt(),
+//       (green ?? 0 * 255.0).toInt(),
+//       (blue ?? 0 * 255.0).toInt(),
+//     );
+//   }
+// }
 
 extension on Color {
   RGBAColor toRGBAColor() {

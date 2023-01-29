@@ -2,11 +2,11 @@ library native_tab_bar_platform;
 
 import 'package:flutter/widgets.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import './pigeons.g.dart';
-import './native_tab_bar.dart';
-import './native_tab_bar_android.dart';
-import './native_tab_bar_ios.dart';
 
+import './native_tab_bar.dart';
+import './pigeons.g.dart';
+
+export './native_tab_bar.dart';
 export './pigeons.g.dart'
     show
         NativeTabBarHostApi,
@@ -14,7 +14,6 @@ export './pigeons.g.dart'
         NativeTabBarApiStyle,
         RGBAColor,
         NativeTab;
-export './native_tab_bar.dart';
 
 /// The interface that implementations of `native_tab_bar` must implement.
 ///
