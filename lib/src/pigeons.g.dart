@@ -203,7 +203,8 @@ abstract class NativeTabBarFlutterApi {
   /// Called when the platform code needs the widget state to invalidate and recreate the native view.
   void refresh(String id);
 
-  static void setup(NativeTabBarFlutterApi? api, {BinaryMessenger? binaryMessenger}) {
+  static void setup(NativeTabBarFlutterApi? api,
+      {BinaryMessenger? binaryMessenger}) {
     {
       final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
           'dev.flutter.pigeon.NativeTabBarFlutterApi.wantsHeight', codec,
@@ -213,7 +214,7 @@ abstract class NativeTabBarFlutterApi {
       } else {
         channel.setMessageHandler((Object? message) async {
           assert(message != null,
-          'Argument for dev.flutter.pigeon.NativeTabBarFlutterApi.wantsHeight was null.');
+              'Argument for dev.flutter.pigeon.NativeTabBarFlutterApi.wantsHeight was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final String? arg_id = (args[0] as String?);
           assert(arg_id != null,
@@ -235,7 +236,7 @@ abstract class NativeTabBarFlutterApi {
       } else {
         channel.setMessageHandler((Object? message) async {
           assert(message != null,
-          'Argument for dev.flutter.pigeon.NativeTabBarFlutterApi.valueChanged was null.');
+              'Argument for dev.flutter.pigeon.NativeTabBarFlutterApi.valueChanged was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final String? arg_id = (args[0] as String?);
           assert(arg_id != null,
@@ -257,7 +258,7 @@ abstract class NativeTabBarFlutterApi {
       } else {
         channel.setMessageHandler((Object? message) async {
           assert(message != null,
-          'Argument for dev.flutter.pigeon.NativeTabBarFlutterApi.refresh was null.');
+              'Argument for dev.flutter.pigeon.NativeTabBarFlutterApi.refresh was null.');
           final List<Object?> args = (message as List<Object?>?)!;
           final String? arg_id = (args[0] as String?);
           assert(arg_id != null,
@@ -294,13 +295,13 @@ class _NativeTabBarHostApiCodec extends StandardMessageCodec {
   @override
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
-      case 128: 
+      case 128:
         return NativeTab.decode(readValue(buffer)!);
-      case 129: 
+      case 129:
         return NativeTabBarApiStyle.decode(readValue(buffer)!);
-      case 130: 
+      case 130:
         return NativeTabIconData.decode(readValue(buffer)!);
-      case 131: 
+      case 131:
         return RGBAColor.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
@@ -320,12 +321,13 @@ class NativeTabBarHostApi {
   static const MessageCodec<Object?> codec = _NativeTabBarHostApiCodec();
 
   /// Called from Flutter to send the tabs to the native platform code.
-  Future<bool> setTabs(String arg_id, List<NativeTab?> arg_tabs, int? arg_selectedIndex) async {
+  Future<bool> setTabs(
+      String arg_id, List<NativeTab?> arg_tabs, int? arg_selectedIndex) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.NativeTabBarHostApi.setTabs', codec,
         binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList =
-        await channel.send(<Object?>[arg_id, arg_tabs, arg_selectedIndex]) as List<Object?>?;
+    final List<Object?>? replyList = await channel
+        .send(<Object?>[arg_id, arg_tabs, arg_selectedIndex]) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',

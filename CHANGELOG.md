@@ -1,3 +1,7 @@
+# 1.0.2
+
+- Dart format pigeons.g.dart.
+
 # 1.0.1
 
 - Add documentation and address analysis issues.
