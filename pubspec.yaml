@@ -1,6 +1,6 @@
 name: native_tab_bar
 description: Native, accessible Android and iOS bottom tabs navigation component for Flutter.
-version: 1.0.2
+version: 1.0.3
 homepage: https://dra11y.com
 repository: https://github.com/dra11y/native_tab_bar
 
@@ -21,6 +21,7 @@ flutter:
 
 dependencies:
   cupertino_icons: ^1.0.5
+  native_flutter_fonts: ^1.0.0
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2

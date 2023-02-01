@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import native_flutter_fonts
 
 class MyNativeTabBar: UITabBar, UILargeContentViewerInteractionDelegate {
     let registrar: FlutterPluginRegistrar?
@@ -135,11 +136,11 @@ class MyNativeTabBar: UITabBar, UILargeContentViewerInteractionDelegate {
     func setTabs(tabs: [NativeTab], selectedIndex: Int?) -> Bool {
         let items = tabs.enumerated().map { (index: Int, tab: NativeTab) in
 
-            let normalIcon = FontRegistry.resolve(
+            let normalIcon = FlutterFontRegistry.resolve(
                 family: tab.nativeTabIcon?.fontFamily,
                     size: 24)?.renderIcon(
                         codePoint: tab.nativeTabIcon?.codePoint?.int)
-            let selectedIcon = FontRegistry.resolve(
+            let selectedIcon = FlutterFontRegistry.resolve(
                     family: tab.nativeTabIcon?.selectedFontFamily,
                     size: 24)?.renderIcon(
                         codePoint: tab.nativeTabIcon?.selectedCodePoint?.int)
