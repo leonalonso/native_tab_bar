@@ -1,3 +1,8 @@
+# 1.0.3
+
+- Move font registry into native_flutter_fonts plugin to fix font conflicts
+  when using simultaneously with accessible_text_view.
+
 # 1.0.2
 
 - Dart format pigeons.g.dart.
