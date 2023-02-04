@@ -1,3 +1,7 @@
+# 1.0.6
+
+- Bump native_flutter_fonts version.
+
 # 1.0.5
 
 - Bump native_flutter_fonts version.
