@@ -1,3 +1,7 @@
+# 1.0.5
+
+- Bump native_flutter_fonts version.
+
 # 1.0.4
 
 - Get working properly with native_flutter_fonts on iOS and Android.
