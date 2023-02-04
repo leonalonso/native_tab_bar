@@ -1,3 +1,7 @@
+# 1.0.4
+
+- Get working properly with native_flutter_fonts on iOS and Android.
+
 # 1.0.3
 
 - Move font registry into native_flutter_fonts plugin to fix font conflicts

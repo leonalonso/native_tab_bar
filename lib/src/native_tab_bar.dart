@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 
 import './native_tab_bar_platform_interface.dart';
 import './pigeons.g.dart';
@@ -105,7 +104,6 @@ class NativeTabBarState extends State<NativeTabBar> {
   double wantedHeight = NativeTabBarPlatform.instance.defaultHeight;
   List<NativeTab> _tabs = [];
   final hostApi = NativeTabBarHostApi();
-  bool _isVisible = false;
   late NativeTabBarStyle _style = widget.style;
 
   void setViewId(int id) {
@@ -152,24 +150,11 @@ class NativeTabBarState extends State<NativeTabBar> {
       });
     }
     // debugDumpSemanticsTree(DebugSemanticsDumpOrder.traversalOrder);
-    return VisibilityDetector(
-      key: _globalKey,
-      onVisibilityChanged: (visibilityInfo) {
-        final isVisible = visibilityInfo.visibleFraction == 1.0;
-        if (isVisible != _isVisible) {
-          setState(() {
-            _isVisible = isVisible;
-          });
-        }
-      },
-      child: SizedBox(
-          height: wantedHeight,
-          child: AnimatedOpacity(
-              duration: Duration(milliseconds: 50),
-              opacity: _isVisible ? 1.0 : 0.0,
-              child: NativeTabBarPlatform.instance
-                  .buildPlatformWidget(this, context))),
-    );
+    return SizedBox(
+        key: _globalKey,
+        height: wantedHeight,
+        child:
+            NativeTabBarPlatform.instance.buildPlatformWidget(this, context));
   }
 }
 

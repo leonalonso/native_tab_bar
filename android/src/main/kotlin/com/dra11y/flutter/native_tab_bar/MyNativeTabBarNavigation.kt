@@ -20,18 +20,7 @@ import com.google.android.material.shape.ShapeAppearanceModel
 import com.google.android.material.theme.MaterialComponentsViewInflater
 import com.google.android.material.theme.overlay.MaterialThemeOverlay
 import io.flutter.embedding.engine.plugins.FlutterPlugin
-
-fun colorLightness(color: Int): Int {
-    val rgb = intArrayOf(Color.red(color), Color.green(color), Color.blue(color))
-    return Math.sqrt(
-        rgb[0] * rgb[0] * .241 + (rgb[1]
-                * rgb[1] * .691) + rgb[2] * rgb[2] * .068
-    ).toInt()
-}
-
-fun colorIsLight(color: Int): Boolean = colorLightness(color) > 200
-
-fun contrastingWhiteOrBlack(color: Int) = if (colorIsLight(color)) Color.BLACK else Color.WHITE
+import kotlin.math.roundToInt
 
 @SuppressLint("ViewConstructor")
 class MyNativeTabBarNavigation(
@@ -46,6 +35,25 @@ class MyNativeTabBarNavigation(
     R.attr.bottomNavigationStyle,
 ) {
     private var style: NativeTabBarApiStyle? = null
+
+    private fun colorLightness(color: Int): Int {
+        val rgb = intArrayOf(Color.red(color), Color.green(color), Color.blue(color))
+        return Math.sqrt(
+            rgb[0] * rgb[0] * .241 + (rgb[1]
+                    * rgb[1] * .691) + rgb[2] * rgb[2] * .068
+        ).toInt()
+    }
+
+    private fun colorIsLight(color: Int): Boolean = colorLightness(color) > 200
+
+    private fun contrastingWhiteOrBlack(color: Int) = if (colorIsLight(color)) Color.BLACK else Color.WHITE
+
+    // Scale by the `density` rather than the `scaledDensity`, otherwise `scaledDensity` gets applied twice.
+    private fun dpToPx(dp: Int): Int =
+        (dp.toFloat() * context.resources.displayMetrics.density).roundToInt()
+
+    private fun pxToDp(px: Int): Int =
+        (px.toFloat() / context.resources.displayMetrics.density).roundToInt()
 
     private val tabs: MutableList<NativeTab> = mutableListOf()
 
@@ -169,11 +177,11 @@ class MyNativeTabBarNavigation(
                         flutterAssets = flutterAssets,
                     )
                     if (isMaterial3) {
-                        itemPaddingTop = 41
-                        itemPaddingBottom = 54
+                        itemPaddingTop = dpToPx(12)
+                        itemPaddingBottom = dpToPx(16)
                     } else {
-                        itemPaddingTop = 8
-                        itemPaddingBottom = 34
+                        itemPaddingTop = dpToPx(8)
+                        itemPaddingBottom = dpToPx(10)
                     }
                 }
             }

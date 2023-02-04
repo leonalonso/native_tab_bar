@@ -21,7 +21,7 @@ flutter:
 
 dependencies:
   cupertino_icons: ^1.0.5
-  native_flutter_fonts: ^1.0.0
+  native_flutter_fonts: ^1.0.1
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2

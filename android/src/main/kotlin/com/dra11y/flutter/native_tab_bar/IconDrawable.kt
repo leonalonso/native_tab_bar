@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.*
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.StateListDrawable
 import android.text.TextPaint
 import android.util.TypedValue
 import io.flutter.embedding.engine.plugins.FlutterPlugin
+import com.dra11y.flutter.native_flutter_fonts.FlutterFontRegistry
 
 class IconDrawable(
     private val context: Context,
@@ -31,11 +31,11 @@ class IconDrawable(
         textPaint.isUnderlineText = false
         textPaint.isAntiAlias = true
         if (iconData.fontFamily != null && iconData.codePoint != null) {
-            normalTypeface = FontRegistry.resolve(iconData.fontFamily)
+            normalTypeface = FlutterFontRegistry.resolve(iconData.fontFamily)
             normalTextValue = String(intArrayOf(iconData.codePoint.toInt()), 0, 1)
         }
         if (iconData.selectedFontFamily != null && iconData.selectedCodePoint != null) {
-            selectedTypeface = FontRegistry.resolve(iconData.selectedFontFamily)
+            selectedTypeface = FlutterFontRegistry.resolve(iconData.selectedFontFamily)
             selectedTextValue = String(intArrayOf(iconData.selectedCodePoint.toInt()), 0, 1)
         }
     }
