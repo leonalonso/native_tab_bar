@@ -31,14 +31,18 @@ class NativeTabIconData {
   NativeTabIconData({
     this.codePoint,
     this.fontFamily,
+    this.fontPackage,
     this.selectedCodePoint,
     this.selectedFontFamily,
+    this.selectedFontPackage,
   });
 
   final int? codePoint;
   final String? fontFamily;
+  final String? fontPackage;
   final int? selectedCodePoint;
   final String? selectedFontFamily;
+  final String? selectedFontPackage;
 }
 
 /// The style of the NativeTabBar.

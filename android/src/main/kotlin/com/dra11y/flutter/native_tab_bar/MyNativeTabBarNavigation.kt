@@ -7,6 +7,7 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.content.res.Resources.Theme
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.util.TypedValue
 import androidx.annotation.RequiresApi
@@ -162,11 +163,11 @@ class MyNativeTabBarNavigation(
         )
 
         val bgColor = if (isNightMode)
-            style?.backgroundColorDark?.color
+            style?.backgroundColorDark?.color ?: style?.backgroundColor?.color
         else
             style?.backgroundColor?.color
 
-        setBackgroundColor(bgColor ?: Color.TRANSPARENT)
+        setItemBackground(ColorDrawable(bgColor ?: Color.TRANSPARENT))
 
         tabs.forEachIndexed { index, tabItem ->
             tabItem.nativeTabIcon?.let { iconData ->

@@ -6,6 +6,15 @@ import 'package:uuid/uuid.dart';
 import './native_tab_bar_platform_interface.dart';
 import './pigeons.g.dart';
 
+extension DoubleToScaledInt on double? {
+  int get scaledInt => ((this ?? 0.0) * 255).toInt();
+}
+
+extension RGBAColorExtension on RGBAColor {
+  Color get color => Color.fromARGB(
+      alpha.scaledInt, red.scaledInt, green.scaledInt, blue.scaledInt);
+}
+
 /// Render a native tab bar platform widget.
 class NativeTabBar extends StatefulWidget {
   const NativeTabBar({
@@ -51,10 +60,14 @@ class NativeTabIcon extends NativeTabIconData {
           codePoint: icon?.codePoint,
           fontFamily: icon?.fontFamily,
           selectedCodePoint:
-              (selectedIcon == null) ? icon?.codePoint : selectedIcon.codePoint,
-          selectedFontFamily: (selectedIcon == null)
-              ? icon?.fontFamily
-              : selectedIcon.fontFamily,
+              (selectedIcon != null) ? selectedIcon.codePoint : icon?.codePoint,
+          fontPackage: icon?.fontPackage,
+          selectedFontFamily: (selectedIcon != null)
+              ? selectedIcon.fontFamily
+              : icon?.fontFamily,
+          selectedFontPackage: (selectedIcon != null)
+              ? selectedIcon.fontPackage
+              : icon?.fontPackage,
         );
 }
 
@@ -106,6 +119,8 @@ class NativeTabBarState extends State<NativeTabBar> {
   final hostApi = NativeTabBarHostApi();
   late NativeTabBarStyle _style = widget.style;
 
+  NativeTabBarStyle get style => _style;
+
   void setViewId(int id) {
     setState(() {
       viewId = id;
@@ -131,6 +146,7 @@ class NativeTabBarState extends State<NativeTabBar> {
     if (height == wantedHeight) return;
 
     setState(() {
+      print('setWantedHeight($height)');
       wantedHeight = height;
     });
   }
@@ -149,6 +165,7 @@ class NativeTabBarState extends State<NativeTabBar> {
         _style = widget.style;
       });
     }
+
     // debugDumpSemanticsTree(DebugSemanticsDumpOrder.traversalOrder);
     return SizedBox(
         key: _globalKey,

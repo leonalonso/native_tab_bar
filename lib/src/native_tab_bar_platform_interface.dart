@@ -1,5 +1,6 @@
 library native_tab_bar_platform;
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -32,7 +33,7 @@ class _PlaceholderImplementation extends NativeTabBarPlatform {}
 abstract class NativeTabBarPlatform extends PlatformInterface
     implements NativeTabBarFlutterApi {
   NativeTabBarPlatform({double? defaultHeight})
-      : this.defaultHeight = defaultHeight ?? 32.0,
+      : this.defaultHeight = defaultHeight ?? kBottomNavigationBarHeight,
         super(token: _token);
 
   static final Object _token = Object();
@@ -102,8 +103,63 @@ abstract class NativeTabBarPlatform extends PlatformInterface
   final String viewType = 'com.dra11y.flutter.native_tab_bar';
 
   Widget buildPlatformWidget(NativeTabBarState state, BuildContext context) {
-    throw UnimplementedError(
-        'buildPlatformWidget() has not been implemented on this platform.');
+    final materialHeight = (state.style.isMaterial3 != false) ? 80.0 : 56.0;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      state.setWantedHeight(materialHeight);
+    });
+    return NavigationBarTheme(
+      data: NavigationBarThemeData(
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+        backgroundColor: state.style.backgroundColor?.color,
+        indicatorColor: state.style.materialIndicatorBackgroundColor?.color,
+        iconTheme: MaterialStateProperty.resolveWith(
+          (states) => IconThemeData(
+            color: states.contains(MaterialState.selected)
+                ? state.style.selectedItemColor?.color
+                : state.style.itemColor?.color,
+          ),
+        ),
+        labelTextStyle: MaterialStateProperty.resolveWith(
+          (states) => TextStyle(
+            color: states.contains(MaterialState.selected)
+                ? state.style.selectedItemColor?.color
+                : state.style.itemColor?.color,
+          ),
+        ),
+      ),
+      child: NavigationBar(
+        elevation: 0,
+        onDestinationSelected: (value) => state.onValueChanged(value),
+        selectedIndex: state.selectedIndex,
+        destinations: [
+          ...state.tabs.map(
+            (tab) {
+              final iconData = tab.nativeTabIcon?.codePoint != null
+                  ? IconData(
+                      tab.nativeTabIcon!.codePoint!,
+                      fontFamily: tab.nativeTabIcon!.fontFamily,
+                      fontPackage: tab.nativeTabIcon!.fontPackage,
+                    )
+                  : null;
+              final activeIconData =
+                  tab.nativeTabIcon?.selectedCodePoint != null
+                      ? IconData(
+                          tab.nativeTabIcon!.selectedCodePoint!,
+                          fontFamily: tab.nativeTabIcon!.selectedFontFamily,
+                          fontPackage: tab.nativeTabIcon!.selectedFontPackage,
+                        )
+                      : null;
+              return NavigationDestination(
+                label: tab.title ?? '',
+                tooltip: tab.title,
+                icon: Icon(iconData),
+                selectedIcon: Icon(activeIconData ?? iconData),
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> onPlatformViewCreated({
