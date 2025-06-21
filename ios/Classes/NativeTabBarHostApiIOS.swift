@@ -13,7 +13,7 @@ import Flutter
 // to the appropriate registered view instance. We use a dictionary as a
 // very simple "instance manager." See also: https://github.com/flutter/plugins/tree/main/packages/webview_flutter
 class NativeTabBarHostApiIOS: NSObject, NativeTabBarHostApi, NativeTabBarApiManagement {
-    func setTabs(id: String, tabs: [NativeTab], selectedIndex: Int32?) -> Bool {
+    func setTabs(id: String, tabs: [NativeTab], selectedIndex: Int64?) throws -> Bool {
         controller(with: id)?.setTabs(tabs: tabs, selectedIndex: selectedIndex?.int) ?? false
     }
 
