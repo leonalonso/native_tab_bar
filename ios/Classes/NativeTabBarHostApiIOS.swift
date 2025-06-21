@@ -21,7 +21,7 @@ class NativeTabBarHostApiIOS: NSObject, NativeTabBarHostApi, NativeTabBarApiMana
         controller(with: id)?.setStyle(style: style) ?? false
     }
 
-    func setSelected(id: String, index: Int32?) -> Bool {
+    func setSelected(id: String, index: Int64?) throws -> Bool {
         guard let index = index?.int else { return false }
         return controller(with: id)?.setSelected(index) ?? false
     }
