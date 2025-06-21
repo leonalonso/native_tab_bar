@@ -58,7 +58,7 @@ class NativeTabBarViewController: NSObject, FlutterPlatformView, NativeTabBarVie
             index != selectedIndex
         else { return }
         selectedIndex = index
-        flutterApi.valueChanged(id: id, selectedIndex: index.int32) { }
+        flutterApi.valueChanged(id: id, selectedIndex: index.int64) { }
     }
 
     private let hostApi: NativeTabBarHostApiIOS
